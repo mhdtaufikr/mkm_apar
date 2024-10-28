@@ -1,0 +1,17 @@
+{
+    "name": "MKM Checksheet IT & Facility",
+    "short_name": "MKM Checksheet IT & Facility",
+    "start_url": "/",
+    "background_color": "#6777ef",
+    "description": "MKM Checksheet IT & Facility",
+    "display": "fullscreen",
+    "theme_color": "#A7AEB8",
+    "icons": [
+        {
+            "src": "icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
