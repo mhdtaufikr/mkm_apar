@@ -106,10 +106,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Checksheet Name (Apar No.)</th>
+                                                            <th>Apar</th>
                                                             <th>Date</th>
                                                             <th>PIC</th>
-                                                            <th>Status</th>
                                                             <th>Action</th>
                                                             <th>PDF</th>
                                                         </tr>
@@ -121,43 +120,15 @@
                                                         @foreach ($item as $data)
                                                         <tr>
                                                             <td>{{ $no++ }}</td>
-                                                            <td>{{$data->machine_name}} ({{$data->op_number}})</td>
+                                                            <td>{{$data->aparInformation->type}} - {{$data->aparInformation->no_apar}} ({{$data->aparInformation->group == '1' ? 'Stamping' : 'Engine'}} - {{$data->aparInformation->location}})</td>
                                                             <td>{{ date('F', strtotime($data->actual_date)) }}</td>
                                                             <td>{{$data->pic}}</td>
                                                             <td>
-                                                                @if($data->status == 0)
-                                                                    <span class="badge bg-primary">Update</span>
-                                                                @elseif($data->status == 1)
-                                                                    <span class="badge bg-info">Check</span>
-                                                                @elseif($data->status == 2)
-                                                                    <span class="badge bg-warning">Waiting Approval</span>
-                                                                @elseif($data->status == 3)
-                                                                    <span class="badge bg-danger">Remand</span>
-                                                                @elseif($data->status == 4)
-                                                                    <span class="badge bg-success">Done</span>
-                                                                @else
-                                                                    <span class="badge bg-secondary">Unknown Status</span>
-                                                                @endif
-                                                            </td>
-
-
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <a href="apar/detail/{{ encrypt($data->id) }}" class="btn btn-primary btn-sm" title="Detail">
-                                                                        <i class="fas fa-info"></i>
-
-                                                                    <button type="button" class="btn btn-info btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <span class="visually-hidden">Toggle Dropdown</span>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#journeyModal{{ $data->id }}"><i class="fas fa-history me-1"></i>View Journey</a></li>
-                                                                        <!-- Tambahkan item dropdown lainnya di sini jika diperlukan -->
-                                                                    </ul>
-                                                                </div>
-
+                                                                <a href="{{ url('/apar/detail/'.encrypt($data->id)) }}" class="btn btn-primary btn-sm" title="Detail">Detail
+                                                                </a>
                                                             </td>
                                                             <td>
-                                                                <a href="checksheet/generate-pdf/{{ encrypt($data->id) }}" class="btn btn-success btn-sm" title="Generate PDF">
+                                                                <a href="{{url('apar/generate-pdf/'.encrypt($data->id))}}" class="btn btn-success btn-sm" title="Generate PDF">
                                                                     <i class="fas fa-file-pdf"></i>
                                                                 </a>
                                                             </td>

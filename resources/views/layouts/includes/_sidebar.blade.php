@@ -13,7 +13,7 @@
                     <div class="nav-link-icon"><i class="fas fa-fire-extinguisher"></i></div>
                     APAR
                 </a>
-                @if(\Auth::user()->role === 'Super Admin' || \Auth::user()->role === 'IT')
+                {{-- @if(\Auth::user()->role === 'Super Admin' || \Auth::user()->role === 'IT')
                  <!-- Sidenav Menu Heading (Master)-->
                  <div class="sidenav-menu-heading">Master</div>
                  <!-- Sidenav Accordion (Master)-->
@@ -27,7 +27,7 @@
                         <a class="nav-link" href="{{url('/master/mechine')}}">Checksheet</a>
                      </nav>
                  </div>
-                 @endif
+                 @endif --}}
                 @if(\Auth::user()->role === 'IT')
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Configuration</div>

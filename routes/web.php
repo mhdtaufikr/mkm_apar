@@ -56,6 +56,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/access/{user}', [UserController::class, 'access'])->middleware(['checkRole:IT']);
 
      //Apar Controller
-     Route::get('/apar/list', [AparController::class, 'index'])->middleware(['checkRole:IT']);;
+     Route::get('/apar/list', [AparController::class, 'index'])->name('list')->middleware(['checkRole:IT']);
+     Route::post('/checksheet/scan', [AparController::class, 'checksheet'])->name('apar.check')->middleware(['checkRole:IT']);
+     Route::post('/checksheet/store', [AparController::class, 'store'])->middleware(['checkRole:IT']);
+     Route::get('apar/detail/{id}', [AparController::class, 'detail'])->middleware(['checkRole:IT']);
+     Route::get('apar/generate-pdf/{id}', [AparController::class, 'generatePdf'])->middleware(['checkRole:IT']);
 
 });

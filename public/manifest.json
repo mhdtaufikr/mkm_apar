@@ -1,11 +1,11 @@
 {
-    "name": "MKM Checksheet IT & Facility",
-    "short_name": "MKM Checksheet IT & Facility",
+    "name": "MKM APAR Checksheet",
+    "short_name": "MKM APAR Checksheet",
     "start_url": "/",
-    "background_color": "#6777ef",
-    "description": "MKM Checksheet IT & Facility",
+    "background_color": "#808080",
+    "description": "MKM APAR Checksheet",
     "display": "fullscreen",
-    "theme_color": "#A7AEB8",
+    "theme_color": "#808080",
     "icons": [
         {
             "src": "icon-512x512.png",
