@@ -37,13 +37,15 @@
     <!-- Main page content-->
     <section class="content">
         <div class="container-fluid">
-            <div class="container-xl px-4 mt-n10">
+            <div class="container-fluid px-4 mt-n10">
                 <div class="row">
                     <!-- Preventive Maintenance Chart Card -->
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-6 mb-3">
                         <div class="card">
-                            <div style="color: white" class="card-header">
-                                Preventive Maintenance Yearly
+                            <div class="card-header">
+                                <h3>
+                                    Preventive Maintenance Yearly
+                                </h3>
                             </div>
                             <div class="card-body">
                                 <div id="pmChartDiv" style="width: 100%; height: 375px;"></div>
@@ -256,7 +258,7 @@
                             });
                         </script>
 
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="card mb-4">
                             <div class="card-header">
                                 <h3>Accumulation of Fire Extinguishers Inspected This Month ({{ now()->format('F') }})</h3>
