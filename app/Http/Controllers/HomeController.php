@@ -38,22 +38,23 @@ class HomeController extends Controller
         $plannedData = array_fill(0, 12, $aparList->count()); // Planned: Each APAR checked once per month
 
         // Gather actual data per month for the current year
-        $actualData = PMFormHead::selectRaw('MONTH(date) as month, COUNT(id) as count')
-            ->whereYear('date', now()->year)
-            ->groupBy('month')
-            ->orderBy('month')
-            ->pluck('count', 'month')
-            ->toArray();
+$actualData = PMFormHead::selectRaw('MONTH(date) as month, COUNT(id) as count')
+->whereYear('date', now()->year)
+->groupBy('month')
+->orderBy('month')
+->pluck('count', 'month')
+->toArray();
 
-        // Format actual data into a 12-month array
-        $actualData = array_replace(array_fill(0, 12, 0), $actualData);
+// Format actual data into a 12-month array (using 1-based index)
+$actualData = array_replace(array_fill(1, 12, 0), $actualData);
 
-        // Calculate percentage accuracy trend
-        $trendData = [];
-        foreach ($plannedData as $index => $plannedQty) {
-            $actualQty = $actualData[$index] ?? 0;
-            $trendData[$index] = $plannedQty ? ($actualQty / $plannedQty) * 100 : 0;
-        }
+// Calculate percentage accuracy trend
+$trendData = [];
+foreach ($plannedData as $index => $plannedQty) {
+$actualQty = $actualData[$index + 1] ?? 0; // Offset by 1 to match 1-based month
+$trendData[$index] = $plannedQty ? ($actualQty / $plannedQty) * 100 : 0;
+}
+
 
         return view('home.index', compact('aparList', 'chartData', 'plannedData', 'actualData', 'trendData'));
     }

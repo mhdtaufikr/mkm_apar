@@ -246,12 +246,11 @@
                                     standardLine.appear();
                                 }
 
-                                // Data from the controller
                                 var plannedData = {!! json_encode($plannedData) !!};
-                                var actualData = {!! json_encode($actualData) !!};
+                                var actualData = Object.values({!! json_encode($actualData) !!}); // Convert to array if not already
                                 var trendData = {!! json_encode($trendData) !!};
-                                var endDate = 12;  // Assuming 12 months
-                                var currentYear = new Date().getFullYear();  // Get the current year
+                                var endDate = 12;
+                                var currentYear = new Date().getFullYear();
 
                                 // Create the chart
                                 createPMChart(plannedData, actualData, trendData, endDate, currentYear);
