@@ -29,13 +29,22 @@ class AparController extends Controller
     $currentMonth = now()->format('m');
     $currentYear = now()->format('Y');
 
-    // Find the APAR information record based on no_apar
+    // Try to find the APAR information based on no_apar from $request->mechine
     $data = AparInformations::where('no_apar', $request->mechine)->first();
 
     if (!$data) {
-        // Redirect back if the APAR information is not found
+        // If not found, try to find based on no_apar from $request->no_mechine
+        $data = AparInformations::where('no_apar', $request->no_mechine)->first();
+    }
+
+    if (!$data) {
+        // If still not found, redirect back with a failure message
         return redirect()->back()->with('failed', 'APAR information not found.');
     }
+
+// Proceed with the found $data
+// Your logic here...
+
 
     // Check if a record with the same apar_information_id and current month and year already exists in pm_form_heads
     $existingChecksheet = PmFormHead::where('apar_information_id', $data->id)

@@ -137,7 +137,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label for="pic" class="form-label">User</label>
+                                                        <label for="pic" class="form-label">PIC</label>
                                                         <input type="text" class="form-control" id="pic" name="pic" value="{{ old('pic', $data->pic ?? '') }}">
                                                     </div>
                                                     <div class="mb-3">

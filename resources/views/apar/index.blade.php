@@ -68,7 +68,7 @@
                                                 @csrf
                                                 <div class="modal-body">
                                                     <div class="form-group mb-4">
-                                                        <select name="mechine" id="machineSelect" class="form-control chosen-select" data-placeholder="Choose a machine...">
+                                                        <select name="mechine" id="machineSelect" class="form-control chosen-select" data-placeholder="Choose a APAR...">
                                                             <!-- Options will be populated dynamically using PHP -->
                                                         </select>
                                                     </div>
