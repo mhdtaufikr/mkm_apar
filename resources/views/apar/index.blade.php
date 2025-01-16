@@ -121,7 +121,7 @@
                                                         <tr>
                                                             <td>{{ $no++ }}</td>
                                                             <td>{{$data->aparInformation->type}} - {{$data->aparInformation->no_apar}} ({{$data->aparInformation->group == '1' ? 'Stamping' : 'Engine'}} - {{$data->aparInformation->location}})</td>
-                                                            <td>{{ date('F', strtotime($data->actual_date)) }}</td>
+                                                            <td>{{ date('F', strtotime($data->date)) }}</td>
                                                             <td>{{$data->pic}}</td>
                                                             <td>
                                                                 <a href="{{ url('/apar/detail/'.encrypt($data->id)) }}" class="btn btn-primary btn-sm" title="Detail">Detail
