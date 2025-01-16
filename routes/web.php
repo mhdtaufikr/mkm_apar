@@ -29,7 +29,7 @@ Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/auth/login', [AuthController::class, 'postLogin']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('request/access', [AuthController::class, 'requestAccess']);
-Route::get('/mst/apar/detail/public/{id}', [AparController::class, 'mstAparDetailPublic'])->name('mst.Apar.detail.public')->middleware(['checkRole:IT']);
+Route::get('/mst/apar/detail/public/{id}', [AparController::class, 'mstAparDetailPublic'])->name('mst.Apar.detail.public');
 
 
 Route::middleware(['auth'])->group(function () {
