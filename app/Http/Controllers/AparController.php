@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Crypt;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\Carbon;
 
 
 class AparController extends Controller
@@ -201,13 +202,14 @@ public function mstAparDetail($id)
     // Fetch the APAR information and related pm_form_head records
     $apar = AparInformations::with('checks')->findOrFail($id);
 
-    // Fetch all records for the same apar_information_id, grouped by month
+  // Fetch all records for the same apar_information_id in the current year, grouped by month
     $yearlyRecords = PmFormHead::where('apar_information_id', $apar->id)
-        ->orderBy('date', 'asc')
-        ->get()
-        ->groupBy(function ($record) {
-            return \Carbon\Carbon::parse($record->date)->format('M'); // Group by abbreviated month name
-        });
+    ->whereYear('date', Carbon::now()->year) // Filter by current year
+    ->orderBy('date', 'asc')
+    ->get()
+    ->groupBy(function ($record) {
+        return Carbon::parse($record->date)->format('M'); // Group by abbreviated month name
+    });
 
     return view('master.detail', compact('apar', 'yearlyRecords'));
 }
