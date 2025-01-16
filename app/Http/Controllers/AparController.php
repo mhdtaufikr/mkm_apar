@@ -224,7 +224,7 @@ public function generateQrCodePdf()
     foreach ($aparRecords as $apar) {
         $apar->qr_code = base64_encode(\QrCode::size(120)
             ->margin(5)
-            ->generate(url("mst/apar/detail/" . $apar->id)));
+            ->generate(url("mst/apar/detail/public/" . $apar->id)));
     }
 
     // Generate the PDF using the Blade template
@@ -233,7 +233,30 @@ public function generateQrCodePdf()
     // Return the PDF as a stream
     return $pdf->stream('apar_qr_codes.pdf');
 }
+public function mstAparDetailPublic($id)
+{
+    try {
+        // Attempt to decrypt the ID
+        $id = decrypt($id);
+    } catch (\Exception $e) {
+        // If decryption fails, assume it's a plain ID
+        // Log or handle the error if needed
+    }
 
+    // Fetch the APAR information and related pm_form_head records
+    $apar = AparInformations::with('checks')->findOrFail($id);
+
+  // Fetch all records for the same apar_information_id in the current year, grouped by month
+    $yearlyRecords = PmFormHead::where('apar_information_id', $apar->id)
+    ->whereYear('date', Carbon::now()->year) // Filter by current year
+    ->orderBy('date', 'asc')
+    ->get()
+    ->groupBy(function ($record) {
+        return Carbon::parse($record->date)->format('M'); // Group by abbreviated month name
+    });
+
+    return view('master.public', compact('apar', 'yearlyRecords'));
+}
 
 
 

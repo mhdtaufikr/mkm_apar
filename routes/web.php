@@ -29,7 +29,7 @@ Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/auth/login', [AuthController::class, 'postLogin']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('request/access', [AuthController::class, 'requestAccess']);
-Route::get('/mst/apar/detail/{id}', [AparController::class, 'mstAparDetail'])->name('mst.Apar.detail');
+Route::get('/mst/apar/detail/public/{id}', [AparController::class, 'mstAparDetailPublic'])->name('mst.Apar.detail.public')->middleware(['checkRole:IT']);
 
 
 Route::middleware(['auth'])->group(function () {
@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
 
      Route::get('/mst/apar', [AparController::class, 'mstApar'])->name('mst.Apar')->middleware(['checkRole:IT']);
+     Route::get('/mst/apar/detail/{id}', [AparController::class, 'mstAparDetail'])->name('mst.Apar.detail')->middleware(['checkRole:IT']);
      Route::get('/generate-qr-code-pdf', [AparController::class, 'generateQrCodePdf'])->name('generate.qr.code.pdf');
 
 
