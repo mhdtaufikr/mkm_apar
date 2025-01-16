@@ -190,9 +190,15 @@ public function mstApar(Request $request)
 
 public function mstAparDetail($id)
 {
-    $id = decrypt($id);
+    try {
+        // Attempt to decrypt the ID
+        $id = decrypt($id);
+    } catch (\Exception $e) {
+        // If decryption fails, assume it's a plain ID
+        // Log or handle the error if needed
+    }
 
-    // Fetch the apar information and related pm_form_head records
+    // Fetch the APAR information and related pm_form_head records
     $apar = AparInformations::with('checks')->findOrFail($id);
 
     // Fetch all records for the same apar_information_id, grouped by month
@@ -205,6 +211,7 @@ public function mstAparDetail($id)
 
     return view('master.detail', compact('apar', 'yearlyRecords'));
 }
+
 
 public function generateQrCodePdf()
 {
