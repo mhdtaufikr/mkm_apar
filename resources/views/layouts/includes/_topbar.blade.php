@@ -19,8 +19,9 @@
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" />
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name">{{ auth()->user()->name }}</div>
-                        <div class="dropdown-user-details-email">{{ auth()->user()->email }}</div>
+                        <div class="dropdown-user-details-name">{{ auth()->user()->name ?? ' ' }}</div>
+                        <div class="dropdown-user-details-email">{{ auth()->user()->email ?? ' ' }}</div>
+
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
