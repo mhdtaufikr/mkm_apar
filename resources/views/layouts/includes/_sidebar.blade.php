@@ -13,6 +13,12 @@
                     <div class="nav-link-icon"><i class="fas fa-fire-extinguisher"></i></div>
                     APAR
                 </a>
+
+                <div class="sidenav-menu-heading">Master</div>
+                <a class="nav-link" href="{{url('/mst/apar')}}">
+                    <div class="nav-link-icon"><i class="fas fa-fire-extinguisher"></i></div>
+                    Master APAR
+                </a>
                 {{-- @if(\Auth::user()->role === 'Super Admin' || \Auth::user()->role === 'IT')
                  <!-- Sidenav Menu Heading (Master)-->
                  <div class="sidenav-menu-heading">Master</div>

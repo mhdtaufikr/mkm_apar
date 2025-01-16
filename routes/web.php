@@ -62,4 +62,12 @@ Route::middleware(['auth'])->group(function () {
      Route::get('apar/detail/{id}', [AparController::class, 'detail'])->middleware(['checkRole:IT']);
      Route::get('apar/generate-pdf/{id}', [AparController::class, 'generatePdf'])->middleware(['checkRole:IT']);
 
+
+     Route::get('/mst/apar', [AparController::class, 'mstApar'])->name('mst.Apar')->middleware(['checkRole:IT']);
+     Route::get('/mst/apar/detail/{id}', [AparController::class, 'mstAparDetail'])->name('mst.Apar.detail')->middleware(['checkRole:IT']);
+     Route::get('/generate-qr-code-pdf', [AparController::class, 'generateQrCodePdf'])->name('generate.qr.code.pdf');
+
+
+
+
 });

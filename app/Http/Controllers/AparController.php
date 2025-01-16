@@ -8,6 +8,10 @@ use App\Models\AparInformations;
 use App\Models\Dropdown;
 use App\Models\PmFormDetail;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Crypt;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class AparController extends Controller
 {
@@ -165,6 +169,64 @@ public function generatePdf($id)
     // Return the generated PDF as a stream
     return $pdf->download('APAR_Checksheet_' . $data->aparInformation->no_apar . '.pdf');
 }
+
+public function mstApar(Request $request)
+{
+    if ($request->ajax()) {
+        $apar = AparInformations::select(['id', 'type', 'no_apar', 'location', 'year', 'group', 'created_at', 'updated_at'])->get();
+
+        // Encrypt the ID
+        foreach ($apar as $row) {
+            $row->encrypted_id = encrypt($row->id);
+        }
+
+        return DataTables::of($apar)
+            ->addIndexColumn() // Adds a virtual numbering column
+            ->make(true); // Return the DataTable response
+    }
+
+    return view('master.index');
+}
+
+public function mstAparDetail($id)
+{
+    $id = decrypt($id);
+
+    // Fetch the apar information and related pm_form_head records
+    $apar = AparInformations::with('checks')->findOrFail($id);
+
+    // Fetch all records for the same apar_information_id, grouped by month
+    $yearlyRecords = PmFormHead::where('apar_information_id', $apar->id)
+        ->orderBy('date', 'asc')
+        ->get()
+        ->groupBy(function ($record) {
+            return \Carbon\Carbon::parse($record->date)->format('M'); // Group by abbreviated month name
+        });
+
+    return view('master.detail', compact('apar', 'yearlyRecords'));
+}
+
+public function generateQrCodePdf()
+{
+    // Fetch 10 APAR records
+    $aparRecords = AparInformations::limit(10)->get();
+
+    // Generate QR codes for each APAR
+    foreach ($aparRecords as $apar) {
+        $apar->qr_code = base64_encode(\QrCode::size(120)
+            ->margin(5)
+            ->generate(url("mst/apar/detail/" . $apar->id)));
+    }
+
+    // Generate the PDF using the Blade template
+    $pdf = PDF::loadView('pdf.qr_code', ['assets' => $aparRecords])->setPaper('a4', 'landscape');;
+
+    // Return the PDF as a stream
+    return $pdf->stream('apar_qr_codes.pdf');
+}
+
+
+
 
 
 
