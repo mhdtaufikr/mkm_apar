@@ -111,7 +111,7 @@
             <div class="login-card-content">
                 <img src="{{ asset('assets/img/mkm_logo.png') }}" alt="DigiMAMS Logo">
                 <h2>Digital APAR Checksheet</h2>
-                <small>Maintenance & Asset Management</small>
+                <small>Maintenance APAR</small>
 
                 <!-- Alerts -->
                 @if (session('statusLogin'))
