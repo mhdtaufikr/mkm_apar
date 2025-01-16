@@ -29,7 +29,6 @@ class AparController extends Controller
 
     public function checksheet(Request $request)
 {
-
     // Get the current month and year
     $currentMonth = now()->format('m');
     $currentYear = now()->format('Y');
@@ -38,9 +37,14 @@ class AparController extends Controller
     $data = AparInformations::where('no_apar', $request->mechine)->first();
 
     if (!$data) {
-        // If not found, try to find based on no_apar from $request->no_mechine
-        $data = AparInformations::where('no_apar', $request->no_mechine)->first();
+        // Parse the URL and extract the ID
+        $urlSegments = explode('/', $request->no_mechine); // Split the URL by '/'
+        $id = end($urlSegments); // Get the last segment (ID)
+
+        // Query the database using the extracted ID
+        $data = AparInformations::where('id', $id)->first();
     }
+
 
     if (!$data) {
         // If still not found, redirect back with a failure message
