@@ -18,32 +18,39 @@ class AuthController extends Controller
         return view('auth.login',compact('dropdown'));
     }
 
-    public function postLogin(Request $request){
-        $emailOrName = $request->input('email');
-        $password = $request->input('password');
+    public function postLogin(Request $request)
+{
+    $emailOrName = $request->input('email');
+    $password = $request->input('password');
 
-        $isEmail = filter_var($emailOrName, FILTER_VALIDATE_EMAIL);
-        $credentials = $isEmail ? ['email' => $emailOrName] : ['name' => $emailOrName];
-        $credentials['password'] = $password;
+    $isEmail = filter_var($emailOrName, FILTER_VALIDATE_EMAIL);
+    $credentials = $isEmail ? ['email' => $emailOrName] : ['name' => $emailOrName];
+    $credentials['password'] = $password;
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if ($user->is_active == '1') {
-                // Update last login
-                User::where('email', $user->email)->update([
-                    'last_login' => now(),
-                    'login_counter' => $user->login_counter + 1,
-                ]);
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        if ($user->is_active == '1') {
+            // Update last login
+            User::where('email', $user->email)->update([
+                'last_login' => now(),
+                'login_counter' => $user->login_counter + 1,
+            ]);
 
-                // Redirect to the intended route after login
-                return redirect()->intended('/home');
-            } else {
-                return redirect('/')->with('statusLogin', 'Give Access First to User');
+            // Check user role and redirect accordingly
+            if ($user->role == 'User') {
+                return redirect('/apar/list');
             }
+
+            // Default redirect for other roles
+            return redirect()->intended('/home');
         } else {
-            return redirect('/')->with('statusLogin', 'Wrong Email/Name or Password');
+            return redirect('/')->with('statusLogin', 'Give Access First to User');
         }
+    } else {
+        return redirect('/')->with('statusLogin', 'Wrong Email/Name or Password');
     }
+}
+
 
 
 

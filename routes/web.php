@@ -37,35 +37,35 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('checksheet');
 
     //Dropdown Controller
-    Route::get('/dropdown', [DropdownController::class, 'index'])->middleware(['checkRole:IT']);
-    Route::post('/dropdown/store', [DropdownController::class, 'store'])->middleware(['checkRole:IT']);
-    Route::patch('/dropdown/update/{id}', [DropdownController::class, 'update'])->middleware(['checkRole:IT']);
-    Route::delete('/dropdown/delete/{id}', [DropdownController::class, 'delete'])->middleware(['checkRole:IT']);
+    Route::get('/dropdown', [DropdownController::class, 'index']);
+    Route::post('/dropdown/store', [DropdownController::class, 'store']);
+    Route::patch('/dropdown/update/{id}', [DropdownController::class, 'update']);
+    Route::delete('/dropdown/delete/{id}', [DropdownController::class, 'delete']);
 
     //Rules Controller
-    Route::get('/rule', [RulesController::class, 'index'])->middleware(['checkRole:IT']);
-    Route::post('/rule/store', [RulesController::class, 'store'])->middleware(['checkRole:IT']);
-    Route::patch('/rule/update/{id}', [RulesController::class, 'update'])->middleware(['checkRole:IT']);
-    Route::delete('/rule/delete/{id}', [RulesController::class, 'delete'])->middleware(['checkRole:IT']);
+    Route::get('/rule', [RulesController::class, 'index']);
+    Route::post('/rule/store', [RulesController::class, 'store']);
+    Route::patch('/rule/update/{id}', [RulesController::class, 'update']);
+    Route::delete('/rule/delete/{id}', [RulesController::class, 'delete']);
 
     //User Controller
-    Route::get('/user', [UserController::class, 'index'])->middleware(['checkRole:IT']);
-    Route::post('/user/store', [UserController::class, 'store'])->middleware(['checkRole:IT']);
-    Route::post('/user/store-partner', [UserController::class, 'storePartner'])->middleware(['checkRole:IT']);
-    Route::patch('/user/update/{user}', [UserController::class, 'update'])->middleware(['checkRole:IT']);
-    Route::get('/user/revoke/{user}', [UserController::class, 'revoke'])->middleware(['checkRole:IT']);
-    Route::get('/user/access/{user}', [UserController::class, 'access'])->middleware(['checkRole:IT']);
+    Route::get('/user', [UserController::class, 'index']);
+    Route::post('/user/store', [UserController::class, 'store']);
+    Route::post('/user/store-partner', [UserController::class, 'storePartner']);
+    Route::patch('/user/update/{user}', [UserController::class, 'update']);
+    Route::get('/user/revoke/{user}', [UserController::class, 'revoke']);
+    Route::get('/user/access/{user}', [UserController::class, 'access']);
 
      //Apar Controller
-     Route::get('/apar/list', [AparController::class, 'index'])->name('list')->middleware(['checkRole:IT']);
-     Route::post('/checksheet/scan', [AparController::class, 'checksheet'])->name('apar.check')->middleware(['checkRole:IT']);
-     Route::post('/checksheet/store', [AparController::class, 'store'])->middleware(['checkRole:IT']);
-     Route::get('apar/detail/{id}', [AparController::class, 'detail'])->middleware(['checkRole:IT']);
-     Route::get('apar/generate-pdf/{id}', [AparController::class, 'generatePdf'])->middleware(['checkRole:IT']);
+     Route::get('/apar/list', [AparController::class, 'index'])->name('list');
+     Route::post('/checksheet/scan', [AparController::class, 'checksheet'])->name('apar.check');
+     Route::post('/checksheet/store', [AparController::class, 'store']);
+     Route::get('apar/detail/{id}', [AparController::class, 'detail']);
+     Route::get('apar/generate-pdf/{id}', [AparController::class, 'generatePdf']);
 
 
-     Route::get('/mst/apar', [AparController::class, 'mstApar'])->name('mst.Apar')->middleware(['checkRole:IT']);
-     Route::get('/mst/apar/detail/{id}', [AparController::class, 'mstAparDetail'])->name('mst.Apar.detail')->middleware(['checkRole:IT']);
+     Route::get('/mst/apar', [AparController::class, 'mstApar'])->name('mst.Apar');
+     Route::get('/mst/apar/detail/{id}', [AparController::class, 'mstAparDetail'])->name('mst.Apar.detail');
      Route::get('/generate-qr-code-pdf', [AparController::class, 'generateQrCodePdf'])->name('generate.qr.code.pdf');
 
 
